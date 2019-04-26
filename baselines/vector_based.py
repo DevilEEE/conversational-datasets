@@ -124,11 +124,12 @@ class BERTEncoder(Encoder):
             vocab_file=vocab_file, do_lower_case=do_lower_case)
 
     def _feed_dict(self, texts, max_seq_len=128):
-        """Create a feed dict for the texts.
+        """Create a feed dict for feeding the texts as input.
 
-        This uses dynamic padding so that the maximum sequence length the
+        This uses dynamic padding so that the maximum sequence length is the
         smaller of `max_seq_len` and the longest sequence actually found in the
-        batch. (The code in `bert.run_classifier` pads up to the maximum)
+        batch. (The code in `bert.run_classifier` always pads up to the maximum
+        even if the examples in the batch are all shorter.)
         """
         all_ids = []
         for text in texts:
