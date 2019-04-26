@@ -73,6 +73,10 @@ class BERTEncoder(Encoder):
     """
     def __init__(self, uri):
         """Create a new `BERTEncoder` object."""
+        if not tf.test.is_gpu_available():
+            glog.warning(
+                "No GPU detected, BERT will run a lot slower than with a GPU.")
+
         self._session = tf.Session(graph=tf.Graph())
         with self._session.graph.as_default():
             glog.info("Loading %s model from tensorflow hub", uri)
